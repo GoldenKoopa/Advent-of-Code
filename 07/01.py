@@ -1,43 +1,16 @@
 import functools
+import os
 
-contents = '''94J8A 16
-JK59A 722
-Q5QQQ 681
-T99T2 39
-595JQ 533
-98299 550
-T596T 971
-JQ999 831
-J3K39 340
-K93T5 107
-2999T 750
-KQ4K4 603
-TT6TT 778
-QAQJQ 731
-K2444 109
-T87J4 984
-72272 70
-555QJ 266
-44384 872
-67768 140
-555A9 322
-Q9A52 14
-6JTTT 994
-66J7Q 360
-6J966 170
-74335 288
-Q7QK7 318
-T63K8 355
-88Q38 612
-TKKKK 291
-8T295 608
-77A77 312
-3ATTA 861
-6JJ66 866
-82367 229
-J86TQ 457
-AJAAA 521
-JTTTT 380'''.splitlines()
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
+with open('input.txt', 'r') as file:
+    contents = file.read().splitlines()
+
+# contents = '''32T3K 765
+# T55J5 684
+# KK677 28
+# KTJJT 220
+# QQQJA 483'''.splitlines()
 
 hands = [contents[i].split()[0] for i in range(len(contents))]
 bids = [contents[i].split()[1] for i in range(len(contents))]
@@ -78,17 +51,18 @@ def lookup(elem):
     return order.index(elem)
 
 def sort_for_high(a, b):
-    print(a, b)
     for i in range(len(a)):
         difference = order.index(a[i]) - order.index(b[i])
         if difference is not 0:
             return difference
 
+ranked = []
 for lst in [five, four, full, three, two_pair, one_pair, high]:
     if len(lst) > 1:
-        lst = sorted(lst, key=functools.cmp_to_key(sort_for_high))
+        ranked += sorted(lst, key=functools.cmp_to_key(sort_for_high))
+    else:
+        ranked += lst
 
-ranked = high + one_pair + two_pair + three + full + four + five
 print(ranked)
-bids = [int(bids[i])*(ranked.index(hands[i])+1) for i in range(len(bids))]
+bids = [int(bids[i])*(len(ranked)-ranked.index(hands[i])) for i in range(len(bids))]
 print(sum(bids), bids)
