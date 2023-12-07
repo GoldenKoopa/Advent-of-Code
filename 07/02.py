@@ -18,9 +18,7 @@ bids = [contents[i].split()[1] for i in range(len(contents))]
 def get_pairs(hand):
     dic = {}
     for i in range(5):
-        if hand[i] in dic:
-            continue
-        else:
+        if hand[i] not in dic:
             dic[hand[i]] = len([j for j in hand if j == hand[i]])
     jokers = dic.pop('J', 0)
     if jokers == 5: return 10
