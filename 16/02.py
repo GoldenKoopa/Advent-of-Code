@@ -33,11 +33,11 @@ def evaluate_energized_tiles(matrix):
 starting_points = []
 for i in range(1, len(contents)-1):
     starting_points.append((1, i, EAST))
-    starting_points.append((len(contents[0])-2, i, WEST))
+    starting_points.append((len(contents[0]), i, WEST))
 
 for i in range(1, len(contents[0])-1):
     starting_points.append((i, 1, SOUTH))
-    starting_points.append((i, len(contents)-2, NORTH))
+    starting_points.append((i, len(contents), NORTH))
 
 print(starting_points)
 
