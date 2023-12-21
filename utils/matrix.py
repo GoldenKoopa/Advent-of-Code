@@ -15,3 +15,10 @@ def pad_matrix(matrix, padding, depth):
     
     return new_matrix
 
+def search_matrix(matrix, element):
+    result = []
+    for i, line in enumerate(matrix):
+        for j, value in enumerate(line):
+            if value == element:
+                result.append((i, j))
+    return result
